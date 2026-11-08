@@ -10,8 +10,8 @@
 <main>
 <nav><a href="../">Battery ETA</a><a href="../support/">Support</a></nav>
 <h1>Privacy policy</h1>
-<p class="muted">Effective 6 November 2026</p>
-<p>Battery ETA does not collect, share or sell any personal data. It has no account, no analytics, no advertising and no tracking.</p>
+<p class="muted">Effective 8 November 2026</p>
+<p>Battery ETA does not sell or share personal data. It has no account, no advertising and no tracking. It sends anonymous usage statistics, which you can turn off in Settings.</p>
 
 <h2>What the app stores on your device</h2>
 <ul>
@@ -27,13 +27,19 @@
 <p>For the other oblasts with schedules you pick the group from a list, and nothing is sent. If you tap Find by address there, the app sends the city, street and house text you type to battery-eta-proxy.mlapin.workers.dev, a Battery ETA service on Cloudflare. It passes the text to the alerts.energy address directory and returns the outage groups for that house. The service writes no log of what you typed. It caches each directory answer for one day, so the same search does not go to alerts.energy twice. To limit requests, it counts them for one hour under a one-way hash of your IP address and then deletes the count. It does not store the IP address itself. Cloudflare's and alerts.energy's privacy policies cover their part of these requests.</p>
 <p>The app then downloads the public outage schedule for your operator, from YASNO or from raw.githubusercontent.com (GitHub), where Battery ETA publishes the schedules it collects from the operators' sites. These requests carry no personal data. GitHub's privacy statement covers the download.</p>
 <p>When you tap Use my location, iOS asks for your permission and gives the app your location once. Apple's geocoding service turns it into a street name, and the app keeps only that street and house text. Your coordinates are not stored or sent anywhere else.</p>
-<p>The app contacts no other server.</p>
+<p>The app also sends anonymous usage statistics, described below. It contacts no other server.</p>
+
+<h2>Anonymous usage statistics</h2>
+<p>The app sends a few events to PostHog, hosted in the EU (eu.i.posthog.com), so the developer can see where setup fails and which features people use. Examples: the app was opened, Find battery found a battery or found none, a connection failed and in which category, how many widgets are on the screen, which outage operator was picked.</p>
+<p>Each event carries a random install ID, the app version, the iOS version, the iPhone or iPad model, the screen size, the time zone, the app language and whether you are on Wi‑Fi or cellular. The ID is made by the app, is deleted when you delete the app and is not linked to you, your Apple ID or your battery.</p>
+<p>The app never sends your battery's IP address, serial number or readings, your street or house, your GPS location, your outage group or any text you type. PostHog drops your IP address and does not look up your location from it.</p>
+<p>To stop sending statistics, turn off Share anonymous usage stats in Settings.</p>
 
 <h2>Third parties</h2>
-<p>The app has no third-party code, analytics or advertising SDKs. If you turned on sharing with app developers in iOS settings, Apple may send crash reports to the developer. Apple's privacy policy covers that.</p>
+<p>The app includes the PostHog SDK for the statistics above and no advertising SDK. If you turned on sharing with app developers in iOS settings, Apple may send crash reports to the developer. Apple's privacy policy covers that.</p>
 
 <h2>Children</h2>
-<p>The app collects no data from anyone, including children.</p>
+<p>The app collects no personal data from anyone, including children.</p>
 
 <h2>Changes</h2>
 <p>A changed policy gets a new effective date on this page.</p>
