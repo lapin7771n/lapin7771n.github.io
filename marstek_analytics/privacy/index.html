@@ -10,7 +10,7 @@
 <main>
 <nav><a href="../">Battery ETA</a><a href="../support/">Support</a></nav>
 <h1>Privacy policy</h1>
-<p class="muted">Effective 8 November 2026</p>
+<p class="muted">Effective 17 November 2026</p>
 <p>Battery ETA does not sell or share personal data. It has no account, no advertising and no tracking. It sends anonymous usage statistics, which you can turn off in Settings.</p>
 
 <h2>What the app stores on your device</h2>
@@ -19,27 +19,39 @@
 <li>Recent readings from your battery, used to draw the app and its widgets.</li>
 <li>The address and outage group you pick on the Address screen, and the outage schedule for that group.</li>
 </ul>
-<p>This data stays in the app's storage on your iPhone or iPad. Battery readings never leave the device. Deleting the app deletes all of it.</p>
+<p>This data stays in the app's storage on your phone or tablet. Battery readings never leave the device. Deleting the app deletes all of it.</p>
 
 <h2>Network use</h2>
 <p>The app reads the battery only at its address on your local Wi‑Fi. Find battery sends one device query to each address on your Wi‑Fi network and nowhere else.</p>
-<p>The Address screen is optional. When you use it, the app sends the city, street and house text you type to the public address directory of the grid operator you picked, to find your outage group: YASNO (app.yasno.ua) for Kyiv and Dnipro, Lvivoblenergo (power-api.loe.lviv.ua), Mykolaivoblenergo (off.energy.mk.ua), Zhytomyroblenergo (ztoe.com.ua) or Poltavaoblenergo (poe.pl.ua). Each operator's own privacy policy covers these requests.</p>
-<p>For the other oblasts with schedules you pick the group from a list, and nothing is sent. If you tap Find by address there, the app sends the city, street and house text you type to battery-eta-proxy.mlapin.workers.dev, a Battery ETA service on Cloudflare. It passes the text to the alerts.energy address directory and returns the outage groups for that house. The service writes no log of what you typed. It caches each directory answer for one day, so the same search does not go to alerts.energy twice. To limit requests, it counts them for one hour under a one-way hash of your IP address and then deletes the count. It does not store the IP address itself. Cloudflare's and alerts.energy's privacy policies cover their part of these requests.</p>
-<p>The app then downloads the public outage schedule for your operator, from YASNO or from raw.githubusercontent.com (GitHub), where Battery ETA publishes the schedules it collects from the operators' sites. These requests carry no personal data. GitHub's privacy statement covers the download.</p>
-<p>When you tap Use my location, iOS asks for your permission and gives the app your location once. Apple's geocoding service turns it into a street name, and the app keeps only that street and house text. Your coordinates are not stored or sent anywhere else.</p>
+<p>The Address screen is optional. When you use it, the app sends the address you type or pick to your region's public outage service to find your outage group. In Kyiv city and in Dnipropetrovsk oblast, that is YASNO (app.yasno.ua). In Lviv, Mykolaiv, Zhytomyr and Poltava oblasts, it is the oblast's power company (power-api.loe.lviv.ua, off.energy.mk.ua, www.ztoe.com.ua, www.poe.pl.ua). In 12 other oblasts, Kyiv oblast among them, it is the alerts.energy address directory. In the remaining oblasts the app sends no address.</p>
+<p>Requests to alerts.energy go through the developer's server on Cloudflare Workers, battery-eta-proxy.mlapin.workers.dev. The server keeps each reply for about 24 hours, keyed by what you searched for, so repeat lookups don't reach the directory. To limit request rates, it also keeps a salted hash of your IP address for about an hour. The server's code writes no IP address or search text to its logs.</p>
+<p>The app downloads outage schedules from YASNO (app.yasno.ua) and from the developer's feed on GitHub (raw.githubusercontent.com). These requests name your power company and, if you picked one in Settings, the schedule source. They never name your address.</p>
+<p>Each of these services and Cloudflare sees your IP address. alerts.energy sees only the developer's server. Each service's own privacy policy covers its requests.</p>
+<p>When you tap Use my location, the system asks for your permission and gives the app your location once. The phone's geocoding service turns it into a street name: Apple's on iPhone and iPad, and Google's on most Android phones. The app keeps only the city, street and house text. Your coordinates are not stored or sent anywhere else.</p>
 <p>The app also sends anonymous usage statistics, described below. It contacts no other server.</p>
 
 <h2>Anonymous usage statistics</h2>
-<p>The app sends a few events to PostHog, hosted in the EU (eu.i.posthog.com), so the developer can see where setup fails and which features people use. Examples: the app was opened, Find battery found a battery or found none, a connection failed and in which category, how many widgets are on the screen, which outage operator was picked.</p>
-<p>Each event carries a random install ID, the app version, the iOS version, the iPhone or iPad model, the screen size, the time zone, the app language and whether you are on Wi‑Fi or cellular. The ID is made by the app, is deleted when you delete the app and is not linked to you, your Apple ID or your battery.</p>
+<p>The app sends a few events to PostHog, on its EU servers (eu.i.posthog.com and eu-assets.i.posthog.com), so the developer can see where setup fails and which features people use. Examples: the app was opened, Find battery found a battery or found none, a connection failed and in which category, how many widgets are on the screen, whether the outage schedule comes from YASNO or the developer's feed.</p>
+<p>Each event carries:</p>
+<ul>
+<li>a random install ID and a random session ID;</li>
+<li>the app's name, ID, version and build number, and the PostHog library version;</li>
+<li>the system name and version, the device type, maker and model, and the screen size;</li>
+<li>whether the app runs on an emulator and whether it came from an app store;</li>
+<li>the time zone, the system language and the app language;</li>
+<li>whether you are on Wi‑Fi or cellular;</li>
+<li>a few PostHog settings and status values.</li>
+</ul>
+<p>On Android, each event also carries the system region, the device code name, the screen density, whether the connection runs over Bluetooth, and the system's user-agent text, which names the device and system build. On iPhone and iPad, it also says whether the app came from TestFlight, whether it runs on a Mac and, on a foldable iPhone, whether it is folded.</p>
+<p>The install ID is made by the app, is deleted when you delete the app and is not linked to you, your Apple or Google account or your battery.</p>
 <p>The app never sends your battery's IP address, serial number or readings, your street or house, your GPS location, your outage group or any text you type. PostHog drops your IP address and does not look up your location from it.</p>
 <p>To stop sending statistics, turn off Share anonymous usage stats in Settings.</p>
 
 <h2>Third parties</h2>
-<p>The app includes the PostHog SDK for the statistics above and no advertising SDK. If you turned on sharing with app developers in iOS settings, Apple may send crash reports to the developer. Apple's privacy policy covers that.</p>
+<p>The app includes the PostHog SDK for the statistics above and no advertising SDK. If you turned on sharing with app developers in iOS settings, or usage and diagnostics on Android, Apple or Google may send crash reports to the developer. Their privacy policies cover that.</p>
 
 <h2>Children</h2>
-<p>The app collects no personal data from anyone, including children.</p>
+<p>The app is not meant for children and collects nothing beyond what this page describes.</p>
 
 <h2>Changes</h2>
 <p>A changed policy gets a new effective date on this page.</p>
