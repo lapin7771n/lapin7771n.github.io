@@ -10,8 +10,8 @@
 <main>
 <nav><a href="../">Battery ETA</a><a href="../support/">Support</a></nav>
 <h1>Privacy policy</h1>
-<p class="muted">Effective 17 November 2026</p>
-<p>Battery ETA does not sell or share personal data. It has no account, no advertising and no tracking. It sends anonymous usage statistics, which you can turn off in Settings.</p>
+<p class="muted">Effective 21 November 2026</p>
+<p>Battery ETA does not sell or share personal data. It has no sign-up, no advertising and no tracking. It sends anonymous usage statistics, which you can turn off in Settings. Shared history, which you turn on yourself, keeps your devices' battery history on the developer's server in a form only your devices can read.</p>
 
 <h2>What the app stores on your device</h2>
 <ul>
@@ -19,7 +19,7 @@
 <li>Recent readings from your battery, used to draw the app and its widgets.</li>
 <li>The address and outage group you pick on the Address screen, and the outage schedule for that group.</li>
 </ul>
-<p>This data stays in the app's storage on your phone or tablet. Battery readings never leave the device. Deleting the app deletes all of it.</p>
+<p>This data stays in the app's storage on your phone or tablet. Deleting the app deletes all of it. Battery readings leave the device only through shared history, described below, and only encrypted.</p>
 
 <h2>Network use</h2>
 <p>The app reads the battery only at its address on your local Wi‑Fi. Find battery sends one device query to each address on your Wi‑Fi network and nowhere else.</p>
@@ -28,7 +28,7 @@
 <p>The app downloads outage schedules from YASNO (app.yasno.ua) and from the developer's feed on GitHub (raw.githubusercontent.com). These requests name your power company and, if you picked one in Settings, the schedule source. They never name your address.</p>
 <p>Each of these services and Cloudflare sees your IP address. alerts.energy sees only the developer's server. Each service's own privacy policy covers its requests.</p>
 <p>When you tap Use my location, the system asks for your permission and gives the app your location once. The phone's geocoding service turns it into a street name: Apple's on iPhone and iPad, and Google's on most Android phones. The app keeps only the city, street and house text. Your coordinates are not stored or sent anywhere else.</p>
-<p>The app also sends anonymous usage statistics, described below. It contacts no other server.</p>
+<p>The app also sends anonymous usage statistics and, if you turn it on, shared history, both described below. It contacts no other server.</p>
 
 <h2>Anonymous usage statistics</h2>
 <p>The app sends a few events to PostHog, on its EU servers (eu.i.posthog.com and eu-assets.i.posthog.com), so the developer can see where setup fails and which features people use. Examples: the app was opened, Find battery found a battery or found none, a connection failed and in which category, how many widgets are on the screen, whether the outage schedule comes from YASNO or the developer's feed.</p>
@@ -47,8 +47,21 @@
 <p>The app never sends your battery's IP address, serial number or readings, your street or house, your GPS location, your outage group or any text you type. PostHog drops your IP address and does not look up your location from it.</p>
 <p>To stop sending statistics, turn off Share anonymous usage stats in Settings.</p>
 
+<h2>Shared history</h2>
+<p>Shared history is off until you add a second device in Settings › Shared history, by scanning a QR code and checking a matching code on both screens. Up to 8 devices then share one battery's history, events and temperature, and a device away from home shows the last charge read at home.</p>
+<p>The devices exchange this data through Google Firebase (Cloud Firestore in Belgium, europe-west1). Each device encrypts the data before it leaves, with keys that exist only on your paired devices. The developer and Google cannot read it. The encrypted data includes the readings, the events, the battery's IP address and port, and the device names.</p>
+<p>To deliver the data, the server also holds, unencrypted:</p>
+<ul>
+<li>a random group ID and, for each device, a random account ID made by Firebase Authentication and the device's public key;</li>
+<li>for each device and day, the date, the time of its last upload, an upload counter and the number of the key it was encrypted with;</li>
+<li>while a device is being added, a pairing record that lasts about 10 minutes.</li>
+</ul>
+<p>Upload times show when a device was on and online, for example that the device at home had power on a given day. Nothing on the server names you, your address, your Apple or Google account or your battery.</p>
+<p>The account ID is anonymous: there is no sign-up, email or password. To check that requests come from the real app, Firebase App Check asks Apple (App Attest or DeviceCheck) or Google Play Integrity about the app; this sends no data of yours to the developer. Firebase sees your IP address for each request, to prevent abuse.</p>
+<p>To leave, swipe this device's row in Settings › Shared history and tap Remove. The app then deletes this device's history and its anonymous account from the server. A device removed from another device, or deleted with the app still in the group, stops uploading, and its data stays until the server deletes it on its own: each day 29 days after its date, and a whole group 60 days after its last upload.</p>
+
 <h2>Third parties</h2>
-<p>The app includes the PostHog SDK for the statistics above and no advertising SDK. If you turned on sharing with app developers in iOS settings, or usage and diagnostics on Android, Apple or Google may send crash reports to the developer. Their privacy policies cover that.</p>
+<p>The app includes the PostHog SDK for the statistics above, the Firebase App Check SDK for shared history, and no advertising SDK. Google's Firebase privacy terms cover its part of shared history. If you turned on sharing with app developers in iOS settings, or usage and diagnostics on Android, Apple or Google may send crash reports to the developer. Their privacy policies cover that.</p>
 
 <h2>Children</h2>
 <p>The app is not meant for children and collects nothing beyond what this page describes.</p>
