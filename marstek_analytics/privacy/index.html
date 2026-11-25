@@ -10,7 +10,7 @@
 <main>
 <nav><a href="../">Battery ETA</a><a href="../support/">Support</a></nav>
 <h1>Privacy policy</h1>
-<p class="muted">Effective 21 November 2026</p>
+<p class="muted">Effective 24 November 2026</p>
 <p>Battery ETA does not sell or share personal data. It has no sign-up, no advertising and no tracking. It sends anonymous usage statistics, which you can turn off in Settings. Shared history, which you turn on yourself, keeps your devices' battery history on the developer's server in a form only your devices can read.</p>
 
 <h2>What the app stores on your device</h2>
@@ -49,19 +49,21 @@
 
 <h2>Shared history</h2>
 <p>Shared history is off until you add a second device in Settings › Shared history, by scanning a QR code and checking a matching code on both screens. Up to 8 devices then share one battery's history, events and temperature, and a device away from home shows the last charge read at home.</p>
-<p>The devices exchange this data through Google Firebase (Cloud Firestore in Belgium, europe-west1). Each device encrypts the data before it leaves, with keys that exist only on your paired devices. The developer and Google cannot read it. The encrypted data includes the readings, the events, the battery's IP address and port, and the device names.</p>
+<p>The devices exchange this data through Google Firebase (Cloud Firestore and Cloud Functions in Belgium, europe-west1). Each device encrypts the data before it leaves, with keys that exist only on your paired devices. The developer and Google cannot read it. The encrypted data includes the readings, the events, the battery's IP address and port, and the device names.</p>
+<p>While the app is open on several devices at home, only one of them reads the battery. It sends each new reading, encrypted, through Firebase Cloud Messaging to the other devices, which show it on screen and in their widgets. For this, each device in a group gets a push token from Firebase and subscribes to a topic whose name comes from your group's key. On iPhone and iPad, Apple's push service delivers these messages. When a device leaves the group, the app unsubscribes it and deletes its push token.</p>
 <p>To deliver the data, the server also holds, unencrypted:</p>
 <ul>
 <li>a random group ID and, for each device, a random account ID made by Firebase Authentication and the device's public key;</li>
 <li>for each device and day, the date, the time of its last upload, an upload counter and the number of the key it was encrypted with;</li>
+<li>which device reads the battery at the moment, as its account ID, and until when, next to the last reading, encrypted;</li>
 <li>while a device is being added, a pairing record that lasts about 10 minutes.</li>
 </ul>
 <p>Upload times show when a device was on and online, for example that the device at home had power on a given day. Nothing on the server names you, your address, your Apple or Google account or your battery.</p>
 <p>The account ID is anonymous: there is no sign-up, email or password. To check that requests come from the real app, Firebase App Check asks Apple (App Attest or DeviceCheck) or Google Play Integrity about the app; this sends no data of yours to the developer. Firebase sees your IP address for each request, to prevent abuse.</p>
-<p>To leave, swipe this device's row in Settings › Shared history and tap Remove. The app then deletes this device's history and its anonymous account from the server. A device removed from another device, or deleted with the app still in the group, stops uploading, and its data stays until the server deletes it on its own: each day 29 days after its date, and a whole group 60 days after its last upload.</p>
+<p>To leave, swipe this device's row in Settings › Shared history and tap Remove. The app then deletes this device's history and its anonymous account from the server. A device removed from another device, or deleted with the app still in the group, stops uploading, and its data stays until the server deletes it on its own: each day 29 days after its date, and a whole group, with the record of which device reads the battery, 60 days after its last upload.</p>
 
 <h2>Third parties</h2>
-<p>The app includes the PostHog SDK for the statistics above, the Firebase App Check SDK for shared history, and no advertising SDK. Google's Firebase privacy terms cover its part of shared history. If you turned on sharing with app developers in iOS settings, or usage and diagnostics on Android, Apple or Google may send crash reports to the developer. Their privacy policies cover that.</p>
+<p>The app includes the PostHog SDK for the statistics above, the Firebase App Check and Firebase Cloud Messaging SDKs for shared history, and no advertising SDK. Google's Firebase privacy terms cover its part of shared history. If you turned on sharing with app developers in iOS settings, or usage and diagnostics on Android, Apple or Google may send crash reports to the developer. Their privacy policies cover that.</p>
 
 <h2>Children</h2>
 <p>The app is not meant for children and collects nothing beyond what this page describes.</p>
